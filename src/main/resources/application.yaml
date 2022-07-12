@@ -1,0 +1,14 @@
+server:
+  port: 8099
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /test_db
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:~/workspace/h2/test_db;AUTO_SERVER=true
+    username: test
+    password: 1234
