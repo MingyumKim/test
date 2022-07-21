@@ -3,6 +3,7 @@ package com.test.test.controller;
 import com.test.test.entity.Member;
 import com.test.test.param.MemberParam;
 import com.test.test.repository.MemberRepository;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ public class MemberController {
      * @return
      */
     @PostMapping("/members/create")
+    @Operation(summary = "createMember", description = "create Member API")
     public ResponseEntity<Long> memberCreate(@RequestBody MemberParam param) {
 
         log.info(param.toString());

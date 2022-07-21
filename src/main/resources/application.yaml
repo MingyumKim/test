@@ -2,7 +2,9 @@ server:
   port: 8099
 
 spring:
-
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://devgyum.cvsqax1yjczc.ap-northeast-2.rds.amazonaws.com/gyumdb
