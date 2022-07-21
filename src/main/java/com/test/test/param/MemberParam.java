@@ -8,4 +8,5 @@ import lombok.Setter;
 public class MemberParam {
     private String name;
     private String id;
+    private String pw;
 }

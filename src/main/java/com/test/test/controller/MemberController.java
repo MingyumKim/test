@@ -32,6 +32,8 @@ public class MemberController {
         Member member = new Member();
         member.setId(param.getId());
         member.setName(param.getName());
+        member.setPw(param.getPw());
+        member.prePersist();
 
         memberRepository.save(member);
 

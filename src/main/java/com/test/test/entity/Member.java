@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table
 @Getter
 @Setter
-public class Member {
+public class Member extends JpaBaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long no;
@@ -20,6 +20,9 @@ public class Member {
 
     @Column(nullable = false)
     private String id;
+
+    @Column(nullable = false)
+    private String pw;
 
     //getter, setter
 
