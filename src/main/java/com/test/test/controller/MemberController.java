@@ -4,6 +4,9 @@ import com.test.test.entity.Member;
 import com.test.test.param.MemberParam;
 import com.test.test.repository.MemberRepository;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,9 +28,15 @@ public class MemberController {
      * @param param
      * @return
      */
+    @Operation(summary = "멤버 생성", description = "멤버 생성 (ID, Name, Password)")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "OK ! !"),
+        @ApiResponse(responseCode = "400", description = "BAD REQUEST ! !"),
+        @ApiResponse(responseCode = "404", description = "NOT FOUND ! !"),
+        @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR ! !")
+    })
     @PostMapping("/members/create")
-    @Operation(summary = "createMember", description = "create Member API")
-    public ResponseEntity<Long> memberCreate(@RequestBody MemberParam param) {
+    public ResponseEntity<Long> memberCreate(@Parameter(description = "멤버정보", required = true, example = "id : test, name : test, pw : 1234") @RequestBody MemberParam param) {
 
         log.info(param.toString());
 
@@ -47,8 +56,15 @@ public class MemberController {
      * @param no
      * @return
      */
+    @Operation(summary = "멤버 조회", description = "번호로 멤버 조회 (No)")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK ! !"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST ! !"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND ! !"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR ! !")
+    })
     @GetMapping("/member/{no}")
-    public ResponseEntity<Member> memberShow(@PathVariable Long no) {
+    public ResponseEntity<Member> memberShow(@Parameter(description = "번호로 멤버 조회", required = true, example = "1") @PathVariable Long no) {
 
         Optional<Member> member = memberRepository.findById(no);
 
