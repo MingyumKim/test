@@ -25,8 +25,8 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Practice Swagger")
-                .description("practice swagger config")
+                .title("GyumStudy Swagger")
+                .description("GyumStudy swagger config")
                 .version("1.0")
                 .build();
     }
