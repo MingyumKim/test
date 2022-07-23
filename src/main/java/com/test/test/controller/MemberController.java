@@ -36,7 +36,7 @@ public class MemberController {
         @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR ! !")
     })
     @PostMapping("/members/create")
-    public ResponseEntity<Long> memberCreate(@Parameter(description = "멤버정보", required = true, example = "id : test, name : test, pw : 1234") @RequestBody MemberParam param) {
+    public ResponseEntity<Long> memberCreate(@Parameter(description = "멤버정보", required = true, example = "id : test, name") @RequestBody MemberParam param) {
 
         log.info(param.toString());
 
@@ -73,6 +73,21 @@ public class MemberController {
         } else {
             return new ResponseEntity<Member>(member.get(), HttpStatus.NOT_FOUND);
         }
+
+    }
+
+    @Operation(summary = "멤버 삭제", description = "번호로 멤버 삭제 (No)")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK ! !"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST ! !"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND ! !"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR ! !")
+    })
+    @GetMapping("/member/delete/{no}")
+    public String memberDelete(@Parameter(description = "번호로 멤버 삭제", required = true, example = "1") @PathVariable Long no) {
+
+        memberRepository.deleteById(no);
+        return "삭제완료";
 
     }
 }
