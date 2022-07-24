@@ -18,10 +18,16 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping(value="/member")
 public class MemberController {
 
     //생성자 주입
     private final MemberRepository memberRepository;
+
+    @GetMapping("/index")
+    public String index () {
+        return "index";
+    }
 
     /**
      * 멤버 생성
@@ -76,6 +82,11 @@ public class MemberController {
 
     }
 
+    /**
+     * 멤버 삭제
+     * @param no
+     * @return
+     */
     @Operation(summary = "멤버 삭제", description = "번호로 멤버 삭제 (No)")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK ! !"),
