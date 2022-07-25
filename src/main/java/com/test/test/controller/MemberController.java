@@ -3,6 +3,7 @@ package com.test.test.controller;
 import com.test.test.entity.Member;
 import com.test.test.param.MemberParam;
 import com.test.test.repository.MemberRepository;
+import com.test.test.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -23,11 +24,7 @@ public class MemberController {
 
     //생성자 주입
     private final MemberRepository memberRepository;
-
-    @GetMapping("/index")
-    public String index () {
-        return "index";
-    }
+    private final MemberService memberService;
 
     /**
      * 멤버 생성
@@ -41,20 +38,10 @@ public class MemberController {
         @ApiResponse(responseCode = "404", description = "NOT FOUND ! !"),
         @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR ! !")
     })
-    @PostMapping("/members/create")
+    @PostMapping("/create")
     public ResponseEntity<Long> memberCreate(@Parameter(description = "멤버정보", required = true, example = "id : test, name") @RequestBody MemberParam param) {
-
         log.info(param.toString());
-
-        Member member = new Member();
-        member.setId(param.getId());
-        member.setName(param.getName());
-        member.setPw(param.getPw());
-        member.prePersist();
-
-        memberRepository.save(member);
-
-        return new ResponseEntity<Long>(member.getNo(), HttpStatus.CREATED);
+        return new ResponseEntity<Long>(memberService.createMember(param), HttpStatus.CREATED);
     }
 
     /**
@@ -69,7 +56,7 @@ public class MemberController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND ! !"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR ! !")
     })
-    @GetMapping("/member/{no}")
+    @GetMapping("/detail/{no}")
     public ResponseEntity<Member> memberShow(@Parameter(description = "번호로 멤버 조회", required = true, example = "1") @PathVariable Long no) {
 
         Optional<Member> member = memberRepository.findById(no);
@@ -94,7 +81,7 @@ public class MemberController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND ! !"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR ! !")
     })
-    @GetMapping("/member/delete/{no}")
+    @GetMapping("/delete/{no}")
     public String memberDelete(@Parameter(description = "번호로 멤버 삭제", required = true, example = "1") @PathVariable Long no) {
 
         memberRepository.deleteById(no);
