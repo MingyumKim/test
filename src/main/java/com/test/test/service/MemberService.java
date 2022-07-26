@@ -5,6 +5,8 @@ import com.test.test.param.MemberParam;
 import com.test.test.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
@@ -25,5 +27,14 @@ public class MemberService {
         memberRepository.save(member);
 
         return member.getNo();
+    }
+
+
+    public Optional<Member> detailMember(Long no) {
+        return memberRepository.findById(no);
+    }
+
+    public void deleteMember(Long no) {
+        memberRepository.deleteById(no);
     }
 }

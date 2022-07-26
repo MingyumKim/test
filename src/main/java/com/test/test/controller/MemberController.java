@@ -2,7 +2,6 @@ package com.test.test.controller;
 
 import com.test.test.entity.Member;
 import com.test.test.param.MemberParam;
-import com.test.test.repository.MemberRepository;
 import com.test.test.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,7 +22,6 @@ import java.util.Optional;
 public class MemberController {
 
     //생성자 주입
-    private final MemberRepository memberRepository;
     private final MemberService memberService;
 
     /**
@@ -57,9 +55,9 @@ public class MemberController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR ! !")
     })
     @GetMapping("/detail/{no}")
-    public ResponseEntity<Member> memberShow(@Parameter(description = "번호로 멤버 조회", required = true, example = "1") @PathVariable Long no) {
+    public ResponseEntity<Member> memberDetail(@Parameter(description = "번호로 멤버 조회", required = true, example = "1") @PathVariable Long no) {
 
-        Optional<Member> member = memberRepository.findById(no);
+        Optional<Member> member = memberService.detailMember(no);
 
         if (member.isPresent()) {
             return new ResponseEntity<Member>(member.get(), HttpStatus.OK);
@@ -84,7 +82,7 @@ public class MemberController {
     @GetMapping("/delete/{no}")
     public String memberDelete(@Parameter(description = "번호로 멤버 삭제", required = true, example = "1") @PathVariable Long no) {
 
-        memberRepository.deleteById(no);
+        memberService.deleteMember(no);
         return "삭제완료";
 
     }
